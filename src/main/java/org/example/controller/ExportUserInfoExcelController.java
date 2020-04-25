@@ -5,6 +5,7 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import org.example.model.entity.User;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class ExportUserInfoExcelController {
         row.put(nameList.get(2), "2");
         row.put(nameList.get(3), "3");
         rows.add(row);
+        long objectSize = ObjectSizeCalculator.getObjectSize(rows);
+        System.err.println(objectSize/(1 << 10 * 1<< 10));
         ExcelWriter writer = ExcelUtil.getWriter(true);
         //跳过当前行，既第一行，非必须，在此演示用
         // writer.passCurrentRow();

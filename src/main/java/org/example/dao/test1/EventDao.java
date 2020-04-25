@@ -1,4 +1,4 @@
-package org.example.dao;
+package org.example.dao.test1;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

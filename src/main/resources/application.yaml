@@ -4,6 +4,8 @@ server:
     context-path: /event
 
 spring:
+  main:
+    banner-mode: console
   profiles:
     active: dev
 
@@ -24,10 +26,6 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
     # 使用druid数据源
     druid:
       #初始化时建立物理连接的个数

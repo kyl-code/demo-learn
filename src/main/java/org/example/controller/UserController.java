@@ -6,6 +6,7 @@ import org.example.model.RespBody;
 import org.example.model.entity.User;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,5 +31,12 @@ public class UserController {
         User user = userService.selectById(id);
         respBody.setParam(user);
         return respBody;
+    }
+
+    @Autowired
+    private ApplicationContext context;
+    @RequestMapping(value = "/publish",method = RequestMethod.GET)
+    public void publish(){
+        context.publishEvent(String.format("this is a %s test!!",5));
     }
 }

@@ -2,26 +2,31 @@ package org.example.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-public class DruidConfig {
-    @Value("${spring.datasource.url}")
+@MapperScan(basePackages = "org.example.dao.test2",sqlSessionFactoryRef = "test2SqlSessionFactory")
+public class DruidConfig2 {
+    @Value("${test2.datasource.url}")
     private String dbUrl;
 
-    @Value("${spring.datasource.username}")
+    @Value("${test2.datasource.username}")
     private String username;
 
-    @Value("${spring.datasource.password}")
+    @Value("${test2.datasource.password}")
     private String password;
-    @Value("${spring.datasource.driver-class-name}")
+    @Value("${test2.datasource.driver-class-name}")
     private String driverClassName;
 
     @Value("${spring.datasource.druid.initial-size}")
@@ -62,11 +67,9 @@ public class DruidConfig {
     @Value("{spring.datasource.druid.connectionProperties}")
     private String connectionProperties;
 
-    @Bean
+    @Bean(name = "test2DataSource")
     //声明其为Bean实例
-    @Primary
-    // 在同样的DataSource中，首先使用被标注的DataSource
-    public DataSource dataSource() {
+    public DataSource test2DataSource() {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(this.dbUrl);
         datasource.setUsername(username);
@@ -93,8 +96,18 @@ public class DruidConfig {
         return datasource;
     }
 
+    @Bean(name = "test2SqlSessionFactory")
+    public SqlSessionFactory clusterSqlSessionFactory(@Qualifier("test2DataSource") DataSource test2DataSource)
+            throws Exception {
+        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(test2DataSource);
+        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources("classpath*:org.example.dao.test2"));
+        return sessionFactory.getObject();
+    }
+
     @Bean
-    public ServletRegistrationBean statViewServlet() {
+    public ServletRegistrationBean statViewServlet2() {
         //创建servlet注册实体
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         //设置ip白名单

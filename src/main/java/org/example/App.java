@@ -1,16 +1,16 @@
 package org.example;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.client.RestTemplate;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -18,13 +18,13 @@ import javax.servlet.MultipartConfigElement;
  * Hello world!
  */
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
+       DataSourceTransactionManagerAutoConfiguration.class,
+       JdbcTemplateAutoConfiguration.class})
 //@EnableJpaRepositories
-@MapperScan(basePackages = "org.example.dao")
-public class App implements ApplicationRunner {
+@EnableSwagger2
+public class App{
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.getEnvironment().setActiveProfiles();
         SpringApplication.run(App.class, args);
     }
 
@@ -43,11 +43,6 @@ public class App implements ApplicationRunner {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder){
         return builder.build();
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-
     }
 }
 
