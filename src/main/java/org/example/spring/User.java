@@ -1,10 +1,10 @@
 package org.example.spring;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import javax.annotation.PreDestroy;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User implements DisposableBean {
     private String name;
@@ -42,5 +42,29 @@ public class User implements DisposableBean {
     @PreDestroy
     public void preDestroy(){
         System.err.println("preDestroy!!");
+    }
+
+    public static void main(String[] args) {
+        long startTime = System.nanoTime();
+        // 执行代码
+        long endTime = System.nanoTime();
+        System.out.println(endTime - startTime);
+
+        System.out.println("===================");
+        long startTime2 = System.currentTimeMillis();
+       // 执行代码
+        long endTime2 = System.currentTimeMillis();
+        System.out.println(endTime2 - startTime2);
+
+        Map<Integer,String> map = new HashMap();
+        map.put(1,"zhangsan");
+        map.put(2,"lisi");
+        map.put(3,"wangwu");
+
+        map.entrySet().stream();
+
+
+
+
     }
 }

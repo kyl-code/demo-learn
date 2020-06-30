@@ -1,10 +1,10 @@
 package org.example;
 
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -20,14 +20,31 @@ import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
        DataSourceTransactionManagerAutoConfiguration.class,
-       JdbcTemplateAutoConfiguration.class})
+       MybatisAutoConfiguration.class})
 //@EnableJpaRepositories
 @EnableSwagger2
 public class App{
     public static void main(String[] args) {
+        String env = getEnv();
+        if(null != env){
+            System.setProperty("spring.profiles.active", env);
+        }
         SpringApplication.run(App.class, args);
     }
 
+    private static String getEnv(){
+        String appEnv = "Foundation.server();";
+        switch (appEnv){
+            case "dev":
+                return "dev";
+            case "fat":
+                return "uat";
+            case "prd":
+                return "prd";
+            default:
+                return null;
+        }
+    }
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
@@ -44,5 +61,6 @@ public class App{
     public RestTemplate restTemplate(RestTemplateBuilder builder){
         return builder.build();
     }
+
 }
 

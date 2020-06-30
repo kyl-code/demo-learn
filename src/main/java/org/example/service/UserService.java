@@ -1,37 +1,24 @@
 package org.example.service;
 
-import org.example.dao.test1.UserSource1Dao;
-import org.example.model.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import org.example.model.entity.User;
+
 import java.util.List;
 
 /**
- * @Author Adam_Guo
- * @Date  2020/4/6
- * @Version 1.0
- **/
-@Service
-public class UserService {
+ * <p></p>
+ * Created by zhezhiyong@163.com on 2017/9/21.
+ */
+public interface UserService {
 
-    @Autowired
-    private UserSource1Dao userDao;
+    List<User> list();
 
-    public Integer insert(User user){
-        user.setBirthday(LocalDateTime.now());
-        Integer count = userDao.insert(user);
-        return count;
-    }
+    User findUserById(Long id);
 
-    public List<User> selectAll(){
-        List<User> list = userDao.selectAll();
-        return list;
-    }
+    User findInfoById(Long id);
 
-    public User selectById(int id){
-        return userDao.selectById(id);
-    }
+    User update(User user);
+
+    void remove(Long id);
 
 }

@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.example.annotation.FeignMesage;
 import org.example.model.RespBody;
@@ -21,14 +22,27 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class MessageAspect {
-    @Around("@annotation(org.example.annotation.FeignMesage)")
+
+    @Pointcut("execution(* org.example.controller..*Controller*.*(..)) || @annotation(org.springframework.stereotype.Controller)")
+    public void pc1(){
+    }
+
+    @Pointcut("@annotation(org.example.annotation.FeignMesage)")
+    public void pc2(){
+    }
+
+    @Around("pc2() || pc1()")
     public Object aroundMethod(final ProceedingJoinPoint joinPoint) {
         try {
             String methodName = joinPoint.getSignature().toString();
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             FeignMesage annotation = signature.getMethod().getAnnotation(FeignMesage.class);
             Object result = Arrays.asList(joinPoint.getArgs());
-            System.out.println("The method name:" + methodName + "--value:" + result + "VALUE:" + annotation.value());
+            if (annotation == null) {
+                System.err.println("say hello");
+            }else{
+                System.out.println("The method name:" + methodName + "--value:" + result + "VALUE:" + annotation.value());
+            }
             return (RespBody<User>)joinPoint.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -36,7 +50,7 @@ public class MessageAspect {
         }
     }
 
-    @Before("@annotation(org.example.annotation.FeignMesage)")
+    @Before("pc2() || pc1()")
     public void beforeMethod(JoinPoint joinPoint) {
         try {
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();

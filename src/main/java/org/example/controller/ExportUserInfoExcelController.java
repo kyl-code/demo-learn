@@ -6,6 +6,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
+import org.apache.commons.compress.utils.Lists;
 import org.example.model.entity.User;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,14 @@ public class ExportUserInfoExcelController {
     @ApiOperation(value = "用户表导出", notes = "用户表导出",produces = "application/octet-stream")
     public void outputUserInfo(HttpServletResponse response) throws Exception {
         List<String> nameList = Arrays.asList("id", "用户名", "性别", "地址", "生日");
-        List<User> users = userService.selectAll();
+        List<User> users = Lists.newArrayList();
         ArrayList<Map<String, Object>> rows = new ArrayList<>();
         for (User user : users) {
             Map<String, Object> row = new LinkedHashMap<>();
             row.put(nameList.get(0), user.getId());
-            row.put(nameList.get(1), user.getUsername());
-            row.put(nameList.get(2), user.getSex());
-            row.put(nameList.get(3), user.getAddress());
+            row.put(nameList.get(1), user.getId());
+            row.put(nameList.get(2), user.getName());
+            row.put(nameList.get(3), user.getPassword());
             rows.add(row);
         }
         Map<String, Object> row = new LinkedHashMap<>();

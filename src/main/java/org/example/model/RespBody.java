@@ -12,6 +12,12 @@ public class RespBody<T> {
         this.message = EventErrorEnum.SUCCESS.getMessage();
     }
 
+    public RespBody(T param){
+        this.code = EventErrorEnum.SUCCESS.getCode();
+        this.message = EventErrorEnum.SUCCESS.getMessage();
+        this.param = param;
+    }
+
     public void setMessage(String message) {
         this.message = message;
     }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -28,6 +29,7 @@ public class DateFormatterUtil {
 
     public static String getNowDateStr() {
         LocalDate localDate = LocalDate.now();
+        Date date = new Date();
         String format = localDate.format(dtf1);
         return format;
     }

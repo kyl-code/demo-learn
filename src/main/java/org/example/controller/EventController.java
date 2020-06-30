@@ -59,10 +59,7 @@ public class EventController {
         Map<String , Integer> map = new HashMap<>();
         map.put("id", 7);
         //RespBody forObject = restTemplate.getForObject("http://127.0.0.1:8084/event/user/select?id={id}", RespBody.class, 7);
-        User user = new User();
-        user.setUsername("test");
-        user.setSex("男");
 
-        String uri = restTemplate.postForObject("http://127.0.0.1:8084/event/user/insert", user,String.class);
+        String uri = restTemplate.postForObject("http://127.0.0.1:8084/event/user/insert", new User(),String.class);
     }
 }

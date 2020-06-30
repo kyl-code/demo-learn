@@ -28,4 +28,11 @@ public class BookController {
         respBody.setParam(insert);
         return respBody;
     }
+
+    @RequestMapping("/cache")
+    public RespBody<String> testCache(){
+        RespBody<String> respBody = new RespBody<>();
+        respBody.setParam("123");
+        return respBody;
+    }
 }
