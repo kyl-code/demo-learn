@@ -1,4 +1,4 @@
-package org.example.strategy;
+package org.example.pattern.strategy;
 
 /**
  * @Author Adam_Guo

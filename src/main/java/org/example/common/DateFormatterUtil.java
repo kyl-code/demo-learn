@@ -4,6 +4,7 @@ import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import org.example.model.dto.Order;
 import org.springframework.util.StopWatch;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -56,6 +57,15 @@ public class DateFormatterUtil {
     public static LocalDateTime getRandomDataTime() {
         LocalDateTime localDateTime = LocalDateTime.now().with(temporal -> temporal.plus(ThreadLocalRandom.current().nextInt(100), ChronoUnit.DAYS));
         return localDateTime;
+    }
+
+    /**
+     * @return 两年前年度的第一个星期一
+     */
+    public static LocalDate getDayOfFirst(){
+        LocalDate localDate = LocalDate.now().minusYears(2);
+        LocalDate of = LocalDate.of(localDate.getYear(), 1, 1);
+        return of.with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.MONDAY));
     }
 
     public static void main(String[] args) {

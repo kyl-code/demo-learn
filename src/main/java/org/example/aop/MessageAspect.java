@@ -39,7 +39,7 @@ public class MessageAspect {
             FeignMesage annotation = signature.getMethod().getAnnotation(FeignMesage.class);
             Object result = Arrays.asList(joinPoint.getArgs());
             if (annotation == null) {
-                System.err.println("say hello");
+                System.err.println("This method has not annotation FeignMesage!");
             }else{
                 System.out.println("The method name:" + methodName + "--value:" + result + "VALUE:" + annotation.value());
             }

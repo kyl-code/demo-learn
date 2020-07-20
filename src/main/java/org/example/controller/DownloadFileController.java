@@ -1,7 +1,9 @@
 package org.example.controller;
 
+import cn.hutool.core.codec.Base64Encoder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.example.model.RespBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -41,6 +45,8 @@ public class DownloadFileController {
             response.setContentType("application/vnd.ms-excel;charset=UTF-8");
             //获取文件的路径
             String filePath = getClass().getResource("/template/" + fileName).getPath();
+            // jar包必须用以下方式
+            // InputStream input = getClass().getResourceAsStream("/template/" + fileName);
             FileInputStream input = new FileInputStream(filePath);
             OutputStream out = response.getOutputStream();
             byte[] b = new byte[2048];
@@ -56,6 +62,23 @@ public class DownloadFileController {
         } catch (Exception ex) {
             logger.error("download :{}", ex);
             //return Response.ok("应用导入模板下载失败！");
+        }
+    }
+
+    @RequestMapping("/picture")
+    public RespBody<String> picture(HttpServletResponse response) throws IOException{
+        String image = getImage();
+        return new RespBody<>(image);
+    }
+
+    private String getImage() throws IOException {
+        byte[] imgData = null;
+        String path = "/template/design.png";
+        try(InputStream inputStream = getClass().getResourceAsStream(path)){
+            imgData = new byte[inputStream.available()];
+            inputStream.read(imgData);
+            String encode = Base64Encoder.encode(imgData);
+            return encode;
         }
     }
 }

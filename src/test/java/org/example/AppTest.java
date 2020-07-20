@@ -7,6 +7,7 @@ import org.assertj.core.util.Lists;
 import org.example.dao.test1.EventDao;
 import org.example.model.RespBody;
 import org.example.model.entity.Book;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,8 @@ public class AppTest {
 
     @Test
     public void test5() {
+        String str = "123";
+        Assert.assertEquals("123",str);
     }
 
     @Test
