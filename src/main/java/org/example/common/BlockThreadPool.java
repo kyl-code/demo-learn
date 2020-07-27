@@ -70,15 +70,12 @@ public final class BlockThreadPool {
         for(int i = 1; i<100 ;i++){
             final int j = i;
             System.err.println("提交第" + i +"给任务！");
-            pool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        TimeUnit.SECONDS.sleep(5);
-                        System.err.println("第" + j + "个任务提交成功！");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            pool.execute(() -> {
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                    System.err.println("第" + j + "个任务提交成功！");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             });
         }

@@ -7,6 +7,7 @@ import org.springframework.util.StopWatch;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -66,6 +67,24 @@ public class DateFormatterUtil {
         LocalDate localDate = LocalDate.now().minusYears(2);
         LocalDate of = LocalDate.of(localDate.getYear(), 1, 1);
         return of.with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.MONDAY));
+    }
+
+    /**
+     * 将date转换为localdate
+     * @param date
+     * @return
+     */
+    public static LocalDate convertDate(Date date){
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
+    }
+
+    /**
+     * 将localdate转换为date
+     * @param localDate
+     * @return
+     */
+    public static Date convertLocalDate(LocalDate localDate){
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public static void main(String[] args) {

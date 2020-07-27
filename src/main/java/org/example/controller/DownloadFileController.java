@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -80,5 +81,22 @@ public class DownloadFileController {
             String encode = Base64Encoder.encode(imgData);
             return encode;
         }
+    }
+
+    // 使用流
+    @RequestMapping("/picture2")
+    public void picture2(HttpServletResponse response) throws IOException {
+        String path = "/template/design.png";
+        response.setContentType("image/png");
+        response.setHeader("Content-disposition", "attachment;fileName=pattern.png");
+        InputStream inputStream = getClass().getResourceAsStream(path);
+        ServletOutputStream outputStream = response.getOutputStream();
+        byte[] imgData = new byte[2048];
+        int len = 0;
+        while ((len = inputStream.read(imgData)) != -1) {
+            outputStream.write(imgData, 0, len);
+        }
+        outputStream.close();
+        inputStream.close();
     }
 }
