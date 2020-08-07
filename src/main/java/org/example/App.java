@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.client.RestTemplate;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -23,6 +24,7 @@ import javax.servlet.MultipartConfigElement;
        MybatisAutoConfiguration.class})
 //@EnableJpaRepositories
 @EnableSwagger2
+@EnableScheduling
 public class App{
     public static void main(String[] args) {
         String env = getEnv();

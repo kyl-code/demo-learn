@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8080
   servlet:
     context-path: /event
 
@@ -66,6 +66,18 @@ spring:
       filters: stat,wall,slf4j
       #通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  redis:
+    host: localhost # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
 
 logging:
   pattern:
