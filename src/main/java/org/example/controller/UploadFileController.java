@@ -38,6 +38,24 @@ public class UploadFileController {
         if(file.isEmpty()){
             throw new RuntimeException("文件为空");
         }
+        // 上传文件并返回访问路径  参考地址：https://blog.csdn.net/RuanBigShuai/article/details/105244630?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param
+        /* String filePath = ""; // 文件保存的位置
+        String urlPath = "";// 文件web浏览路径
+        // 原始名 以 a.jpg为例
+        String originalFilename = file.getOriginalFilename();
+        // 加上时间戳生成新的文件名,防止重复 newFileName = "1595511980146a.jpg"
+        String newFileName = System.currentTimeMillis() + originalFilename;
+        filePath = fileRootPath +  newFileName;
+        System.out.println(filePath);
+        try {
+            File file1 = new File(filePath);
+            if (!file1.exists()) file1.mkdirs(); // 要是目录不存在,创建一个
+            file.transferTo(file1);              // 保存起来
+            urlPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/archive/" + newFileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
         try {
             String originalFilename = file.getOriginalFilename();
             String name = null;
