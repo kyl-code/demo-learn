@@ -1,13 +1,8 @@
 package org.example.common;
 
-import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import org.example.model.dto.Order;
-import org.springframework.util.StopWatch;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -87,25 +82,6 @@ public class DateFormatterUtil {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
-    public static void main(String[] args) {
-        List<Integer> collect = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
-        System.out.println(collect);
-
-        int elementCount = 1000000;
-        int loopCount = 1000;
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start("listSearch");
-        Object list = listSearch(elementCount, loopCount);
-        System.out.println(ObjectSizeCalculator.getObjectSize(list));
-        stopWatch.stop();
-        stopWatch.start("mapSearch");
-        Object map = mapSearch(elementCount, loopCount);
-        stopWatch.stop();
-        System.out.println(ObjectSizeCalculator.getObjectSize(map));
-        System.out.println(stopWatch.prettyPrint());
-    }
-
-
     private static Object listSearch(int elementCount, int loopCount) {
         List<Order> list = IntStream.rangeClosed(1, elementCount).mapToObj(i -> new Order(i)).collect(Collectors.toList());
         IntStream.rangeClosed(1, loopCount).forEach(i -> {
@@ -123,4 +99,17 @@ public class DateFormatterUtil {
         });
         return map;
     }
+
+    /**
+     * 获取当月的结束时间
+     */
+    private static LocalDateTime getEndtimeOfMonth(){
+        return LocalDateTime.of(LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()), LocalTime.MAX);
+    }
+
+    public static void main(String[] args) {
+        LocalDateTime endtimeOfMonth = getEndtimeOfMonth();
+        System.err.println(endtimeOfMonth);
+    }
+
 }

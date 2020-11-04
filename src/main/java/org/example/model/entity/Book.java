@@ -1,6 +1,7 @@
 package org.example.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -11,6 +12,7 @@ public class Book implements Serializable {
     @Column
     private Integer id;
     @Column
+    @NotNull(message = "name不能为空")
     private String name;
     @Column
     private Double price;

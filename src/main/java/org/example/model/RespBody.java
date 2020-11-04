@@ -3,6 +3,8 @@ package org.example.model;
 import org.example.exception.GlobaInfoException;
 
 public class RespBody<T> {
+    public static final RespBody RB = new RespBody<>();
+
     private String message;
     private String code;
     private transient T param;
@@ -34,6 +36,10 @@ public class RespBody<T> {
     public RespBody(GlobaInfoException exception){
         this.code = exception.getCode();
         this.message = exception.getMessage();
+    }
+
+    public  RespBody<T>  success(T data){
+        return new RespBody(data);
     }
 
     public String getMessage() {
