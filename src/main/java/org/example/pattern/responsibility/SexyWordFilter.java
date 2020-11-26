@@ -1,6 +1,8 @@
 package org.example.pattern.responsibility;
 
-public class SexyWordFilter implements WordFilter {
+import org.springframework.core.Ordered;
+
+public class SexyWordFilter implements WordFilter, Ordered {
     @Override
     public boolean filter(String content) {
         if("abc".endsWith(content)){
@@ -8,5 +10,10 @@ public class SexyWordFilter implements WordFilter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int getOrder() {
+        return -10;
     }
 }

@@ -1,7 +1,9 @@
 package org.example.pattern.responsibility;
 
 
-public class OtherWordFilter implements WordFilter {
+import org.springframework.core.Ordered;
+
+public class OtherWordFilter implements WordFilter, Ordered {
     @Override
     public boolean filter(String content) {
         if("123".equals(content)){
@@ -9,5 +11,10 @@ public class OtherWordFilter implements WordFilter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int getOrder() {
+        return -1;
     }
 }
